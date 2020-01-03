@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+    <meta charset="utf-8">
+    <title>TomoMaps</title>
+    <style>
+      html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
+      #map {
+        height: 100%;
+      }
+    </style>
+    <script>
+
+// This example adds a red rectangle to a map.
+var map,mat,row,col;
+
+function initMap() {
+    
+  map = new google.maps.Map(document.getElementById('map'), {
+    zoom:5,
+    center: {lat: 39.50, lng: -98.000},
+    mapTypeId: google.maps.MapTypeId.TERRAIN
+  });
+  
+}
+
+    </script>
+  </head>
+  <body>
+  <input type="file" id="archivo"><br>
+    <div id="map"></div>
+    <script async defer
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCawvZGJ4rShvuzf9FCqkhQH7GdGyxcYtI&signed_in=true&callback=initMap"></script>
+  </body>
+</html>
+
+<script>
+   window.addEventListener('load', inicio, false);
+
+    function inicio() {
+        document.getElementById('archivo').addEventListener('change', cargar, false);               
+    }
+
+    function cargar(ev) {
+     //   document.getElementById('datos').innerHTML='Nombre del archivo:'+ev.target.files[0].name+'<br>'+
+     //                                              'Tamaño del archivo:'+ev.target.files[0].size+'<br>'+  
+     //                                              'Tipo MIME:'+ev.target.files[0].type;
+        var arch=new FileReader();
+        arch.addEventListener('load',leer,false);
+        arch.readAsText(ev.target.files[0]);		
+    }
+    
+    function leer(ev) {
+	    var str = ev.target.result;
+		var res = str.split(" ");
+		row = res[0];
+		col = res[1];
+		var count = 2;
+		
+		mat = new Array(row);
+		for(i=0 ; i<row ; i ++)
+		   mat[i] = new Array(col);
+		   
+		for(i=0 ; i<row ; i++)
+		   for(j=0 ; j<col ; j++){
+		       mat [i][j] = res[count];
+			   count++;			
+			}
+			
+		
+
+//	   alert(mat[0][0]);
+plot();
+			   
+    }
+	
+function plot(){
+	 
+//  alert(mat[0][0]);	 
+  var color;
+ color = ['#ff0000','#ff0000','#ff0400','#ff0800','#ff0c00','#ff1000','#ff1400','#ff1800','#ff1d00','#ff2100','#ff2500','#ff2900','#ff2d00','#ff3100','#ff3500','#ff3900','#ff3d00','#ff4100','#ff4500','#ff4900','#ff4e00','#ff5200','#ff5600','#ff5a00','#ff5e00','#ff6200','#ff6600','#ff6a00','#ff6e00','#ff7200','#ff7600','#ff7a00','#ff7e00','#ff8300','#ff8700','#ff8b00','#ff8f00','#ff9300','#ff9700','#ff9b00','#ff9f00','#ffa300','#ffa700','#ffab00','#ffaf00','#ffb400','#ffb800','#ffbc00','#ffc000','#ffc400','#ffc800','#ffcc00','#ffd000','#ffd400','#ffd800','#ffdc00','#ffe000','#ffe400','#ffe900','#ffed00','#fff100','#fff500','#fff900','#fffd00','#fdff00','#f9ff00','#f5ff00','#f1ff00','#edff00','#e9ff00','#e4ff00','#e0ff00','#dcff00','#d8ff00','#d4ff00','#d0ff00','#ccff00','#c8ff00','#c4ff00','#c0ff00','#bcff00','#b8ff00','#b4ff00','#afff00','#abff00','#a7ff00','#a3ff00','#9fff00','#9bff00','#97ff00','#93ff00','#8fff00','#8bff00','#87ff00','#83ff00','#7eff00','#7aff00','#76ff00','#72ff00','#6eff00','#6aff00','#66ff00','#62ff00','#5eff00','#5aff00','#56ff00','#52ff00','#4eff00','#49ff00','#45ff00','#41ff00','#3dff00','#39ff00','#35ff00','#31ff00','#2dff00','#29ff00','#25ff00','#21ff00','#1dff00','#18ff00','#14ff00','#10ff00','#0cff00','#08ff00','#04ff00','#00ff00','#00ff04','#00ff08','#00ff0c','#00ff10','#00ff14','#00ff18','#00ff1d','#00ff21','#00ff25','#00ff29','#00ff2d','#00ff31','#00ff35','#00ff39','#00ff3d','#00ff41','#00ff45','#00ff49','#00ff4e','#00ff52','#00ff56','#00ff5a','#00ff5e','#00ff62','#00ff66','#00ff6a','#00ff6e','#00ff72','#00ff76','#00ff7a','#00ff7e','#00ff83','#00ff87','#00ff8b','#00ff8f','#00ff93','#00ff97','#00ff9b','#00ff9f','#00ffa3','#00ffa7','#00ffab','#00ffaf','#00ffb4','#00ffb8','#00ffbc','#00ffc0','#00ffc4','#00ffc8','#00ffcc','#00ffd0','#00ffd4','#00ffd8','#00ffdc','#00ffe0','#00ffe4','#00ffe9','#00ffed','#00fff1','#00fff5','#00fff9','#00fffd','#00fdff','#00f9ff','#00f5ff','#00f1ff','#00edff','#00e9ff','#00e4ff','#00e0ff','#00dcff','#00d8ff','#00d4ff','#00d0ff','#00ccff','#00c8ff','#00c4ff','#00c0ff','#00bcff','#00b8ff','#00b4ff','#00afff','#00abff','#00a7ff','#00a3ff','#009fff','#009bff','#0097ff','#0093ff','#008fff','#008bff','#0087ff','#0083ff','#007eff','#007aff','#0076ff','#0072ff','#006eff','#006aff','#0066ff','#0062ff','#005eff','#005aff','#0056ff','#0052ff','#004eff','#0049ff','#0045ff','#0041ff','#003dff','#0039ff','#0035ff','#0031ff','#002dff','#0029ff','#0025ff','#0021ff','#001dff','#0018ff','#0014ff','#0010ff','#000cff','#0008ff','#0004ff'];	  var scale = 14.8;  
+  var inin = 50.250;
+  var inie = -124.500;
+  var difns = 0.014*scale;
+  var difwe = 0.014*scale;
+  var co =0;
+ // alert(row+" -- "+col);
+// row=30;
+// col=30;
+  	for(i=0;i<row;i++){
+	 for(j=0;j<col;j++){
+	   if(mat[i][j]>0){
+		var n = inin - ( i * difns ) ;
+		var s = n - difns;
+		var e= inie + ( j * difwe );
+		var w = e - difwe;
+		var rectangle = new google.maps.Rectangle({
+    	strokeColor: color[mat[i][j]],//'#FF0000',
+    	strokeOpacity: 0,
+    	strokeWeight: 0,
+    	fillColor: color[mat[i][j]], //'#FF0000',
+    	fillOpacity: 0.35,
+    	map: map,
+    	bounds: {
+      		north: n,
+      		south: s,
+      		east:  e,
+      		west:  w
+    	}
+  		});
+		co++;
+		//rectangle.setMap(map);
+	  }
+		
+      }
+	 
+    }
+	//alert(co);
+}
+</script>
